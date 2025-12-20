@@ -1,0 +1,17 @@
+C:\Users\Dejan.Ristevski\Documents\development\smartgoals\springboot\src\main\java\com\example\api\dto\LoginRequest.java
+C:\Users\Dejan.Ristevski\Documents\development\smartgoals\springboot\src\main\java\com\example\api\repository\UserRepository.java
+C:\Users\Dejan.Ristevski\Documents\development\smartgoals\springboot\src\main\java\com\example\api\security\JwtAuthFilter.java
+C:\Users\Dejan.Ristevski\Documents\development\smartgoals\springboot\src\main\java\com\example\api\security\SecurityConfig.java
+C:\Users\Dejan.Ristevski\Documents\development\smartgoals\springboot\src\main\java\com\example\api\config\WebConfig.java
+C:\Users\Dejan.Ristevski\Documents\development\smartgoals\springboot\src\main\java\com\example\api\controller\RecipeController.java
+C:\Users\Dejan.Ristevski\Documents\development\smartgoals\springboot\src\main\java\com\example\api\dto\AuthResponse.java
+C:\Users\Dejan.Ristevski\Documents\development\smartgoals\springboot\src\main\java\com\example\api\model\Recipe.java
+C:\Users\Dejan.Ristevski\Documents\development\smartgoals\springboot\src\main\java\com\example\api\dto\RecipeDTO.java
+C:\Users\Dejan.Ristevski\Documents\development\smartgoals\springboot\src\main\java\com\example\api\security\JwtUtil.java
+C:\Users\Dejan.Ristevski\Documents\development\smartgoals\springboot\src\main\java\com\example\api\entity\User.java
+C:\Users\Dejan.Ristevski\Documents\development\smartgoals\springboot\src\main\java\com\example\api\RecipeApiApplication.java
+C:\Users\Dejan.Ristevski\Documents\development\smartgoals\springboot\src\main\java\com\example\api\config\EnvConfig.java
+C:\Users\Dejan.Ristevski\Documents\development\smartgoals\springboot\src\main\java\com\example\api\entity\Recipe.java
+C:\Users\Dejan.Ristevski\Documents\development\smartgoals\springboot\src\main\java\com\example\api\service\CustomUserDetailsService.java
+C:\Users\Dejan.Ristevski\Documents\development\smartgoals\springboot\src\main\java\com\example\api\repository\RecipeRepository.java
+C:\Users\Dejan.Ristevski\Documents\development\smartgoals\springboot\src\main\java\com\example\api\controller\AuthController.java
