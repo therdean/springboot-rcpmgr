@@ -1,0 +1,64 @@
+name: Backend CI/CD Pipeline
+
+on:
+  push:
+    branches:
+      - master
+    paths:
+      - '.github/workflows/backend-*.yml'
+      - 'src/**'
+      - 'pom.xml'
+      - 'Dockerfile'
+
+env:
+  REGISTRY_LOGIN_SERVER: ${{ secrets.ACR_LOGIN_SERVER }}
+  REGISTRY_USERNAME: ${{ secrets.ACR_USERNAME }}
+  REGISTRY_PASSWORD: ${{ secrets.ACR_PASSWORD }}
+  IMAGE_NAME: springboot-rcpmgr
+  KUBERNETES_NAMESPACE: default
+
+jobs:
+  build-and-push:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up JDK 17
+        uses: actions/setup-java@v3
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+          cache: maven
+
+      - name: Build with Maven
+        run: mvn clean package -DskipTests
+
+      - name: Login to Azure Container Registry
+        uses: azure/docker-login@v1
+        with:
+          login-server: ${{ env.REGISTRY_LOGIN_SERVER }}
+          username: ${{ env.REGISTRY_USERNAME }}
+          password: ${{ env.REGISTRY_PASSWORD }}
+
+      - name: Build Docker image
+        run: |
+          docker build -t ${{ env.REGISTRY_LOGIN_SERVER }}/${{ env.IMAGE_NAME }}:${{ github.sha }} .
+          docker build -t ${{ env.REGISTRY_LOGIN_SERVER }}/${{ env.IMAGE_NAME }}:latest .
+
+      - name: Push image to ACR
+        run: |
+          docker push ${{ env.REGISTRY_LOGIN_SERVER }}/${{ env.IMAGE_NAME }}:${{ github.sha }}
+          docker push ${{ env.REGISTRY_LOGIN_SERVER }}/${{ env.IMAGE_NAME }}:latest
+
+      - name: Update Kubernetes deployment
+        uses: azure/k8s-set-context@v3
+        with:
+          method: kubeconfig
+          kubeconfig: ${{ secrets.KUBE_CONFIG }}
+
+      - name: Deploy to Kubernetes
+        run: |
+          kubectl set image deployment/springboot-rcpmgr springboot-rcpmgr=${{ env.REGISTRY_LOGIN_SERVER }}/${{ env.IMAGE_NAME }}:${{ github.sha }} -n ${{ env.KUBERNETES_NAMESPACE }}
+          kubectl rollout status deployment/springboot-rcpmgr -n ${{ env.KUBERNETES_NAMESPACE }} --timeout=5m
